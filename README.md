@@ -18,7 +18,7 @@ After:
 
 ![After](src/test/resources/output.jpg?raw=true "After")
 
-As you can see those image both weight 7.9kB, yet the second one is way uglier.
+As you can see the second image weights 100+kB whereas the first is around 30kB , yet the second one is way uglier.
 
 ### That's great, how can I use your code?
 
