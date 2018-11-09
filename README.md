@@ -12,7 +12,7 @@ It is possible to reduce the size of the matrix, in order to do a proper compres
 
 Before: 
 
-![Before](src/test/resources/download.jpeg?raw=true "Before")
+![Before](src/test/resources/download.jpg?raw=true "Before")
 
 After:
 
