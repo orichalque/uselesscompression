@@ -5,11 +5,24 @@ import java.awt.Dimension
 import java.awt.image.BufferedImage
 import java.io.File
 import java.util.*
+import javax.imageio.IIOImage
 import javax.imageio.ImageIO
 import javax.swing.ImageIcon
 import javax.swing.JFrame
 import javax.swing.JLabel
 import javax.swing.JPanel
+import javax.imageio.ImageWriteParam
+import javax.imageio.metadata.IIOMetadata
+import javax.imageio.plugins.jpeg.JPEGImageWriteParam
+import javax.imageio.stream.FileImageOutputStream
+import com.sun.deploy.uitoolkit.ToolkitStore.dispose
+import java.io.FileOutputStream
+import java.lang.System.out
+import javax.imageio.stream.MemoryCacheImageOutputStream
+import javax.imageio.stream.ImageOutputStream
+import javax.imageio.ImageWriter
+
+
 
 
 class Main {
@@ -49,13 +62,13 @@ class Main {
         f.add(jPanel)
         f.isVisible = true
 
-        Scanner(System.`in`).next()
     }
 
     fun reduceMatrix(matrix: ArrayList<ArrayList<Color>>, factor : Int) : ArrayList<ArrayList<Color>> {
 
         var map = HashMap<Pair<Int, Int>, ArrayList<Color>>()
-        matrix.mapIndexed { i, line ->  line.mapIndexed {j, column -> Pair(i / factor , j / factor)}
+        matrix.mapIndexed { i, line ->
+            line.mapIndexed {j, column -> Pair(i / factor , j / factor)}
                 .mapIndexed { j, pair ->
                     if (map[pair] == null) {
                         map[pair] = ArrayList()
@@ -66,9 +79,7 @@ class Main {
                 .forEachIndexed {j, pair -> matrix[i][j] = averageColor(map.get(key = Pair(i / factor , j / factor))!!)}
         }
 
-
         return matrix
-
     }
 
     private fun averageColor(colors: ArrayList<Color>): Color {
@@ -81,13 +92,31 @@ class Main {
         return Color(r/colors.size, g/colors.size, b/colors.size, a/colors.size)
     }
 
-    fun toImage(reduced: ArrayList<ArrayList<Color>>, f : File) {
+    fun toImage(reduced: ArrayList<ArrayList<Color>>, f: File, metadata: IIOMetadata? = null) {
         var image = BufferedImage(reduced.size, reduced[0].size, BufferedImage.TYPE_INT_ARGB)
         reduced.forEachIndexed{i, arrayList ->  arrayList.forEachIndexed { j, color -> image.setRGB(i, j, color.rgb) }}
+
         if (!f.exists())
             f.createNewFile()
 
-        ImageIO.write(image, "jpg", f)
+        var imageWriter = ImageIO.getImageWritersByFormatName("jpg").next()
+        val iwp = imageWriter.defaultWriteParam
+        iwp.compressionMode = ImageWriteParam.MODE_EXPLICIT
+        iwp.compressionQuality = 1f
+        val imgOut = MemoryCacheImageOutputStream(FileOutputStream(f))
+        imageWriter.output = imgOut
+
+        val iioimage = IIOImage(image, null, metadata)
+        imageWriter.write(null, iioimage, iwp)
+        imageWriter.dispose()
+
+    }
+
+    fun readMetadata(image: File): IIOMetadata? {
+        var input = ImageIO.createImageInputStream(image)
+        var reader = ImageIO.getImageReaders(input).next()
+        reader.setInput(input, true)
+        return reader.streamMetadata
     }
 
 }
