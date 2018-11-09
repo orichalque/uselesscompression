@@ -99,6 +99,16 @@ class Main {
         if (!f.exists())
             f.createNewFile()
 
+
+        if ("png".equals(f.extension)) {
+            savePng(image, f)
+        } else if ("jpg".equals(f.extension)) {
+            saveJpg(image, f, metadata)
+        }
+
+    }
+
+    private fun saveJpg(image: BufferedImage, f: File, metadata: IIOMetadata?) {
         var imageWriter = ImageIO.getImageWritersByFormatName("jpg").next()
         val iwp = imageWriter.defaultWriteParam
         iwp.compressionMode = ImageWriteParam.MODE_EXPLICIT
@@ -109,7 +119,10 @@ class Main {
         val iioimage = IIOImage(image, null, metadata)
         imageWriter.write(null, iioimage, iwp)
         imageWriter.dispose()
+    }
 
+    private fun savePng(image: BufferedImage, f: File) {
+        ImageIO.write(image, "png", f)
     }
 
     fun readMetadata(image: File): IIOMetadata? {

@@ -17,4 +17,15 @@ class GreetingTest {
         main.toImage(reduced, File("src/test/resources/output.jpg"), main.readMetadata(image))
     }
 
+    @Test
+    fun testLoadImagePng() {
+        var image = File("src/test/resources/download.png")
+        var main = Main()
+        var matrix = main.loadFile(image)
+        //main.displayMatrix(matrix)
+        var reduced = main.reduceMatrix(matrix, 10)
+        main.displayMatrix(reduced)
+        main.toImage(reduced, File("src/test/resources/output.png"), main.readMetadata(image))
+    }
+
 }
