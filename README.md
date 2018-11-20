@@ -18,8 +18,6 @@ After:
 
 <img src="https://github.com/orichalque/uselesscompression/blob/master/src/test/resources/output.jpg?raw=true" width="100">
 
-As you can see the second image weights 100+kB whereas the first is around 30kB , yet the second one is way uglier.
-
 # Weird Splitters
 
 This project propose some weird image experimentations, easily usable in the WeirdSplitters classes.
@@ -27,12 +25,11 @@ The purpose is to transform images according to some algorithms, providing some 
 
 Before: 
 
-![Before](https://github.com/orichalque/uselesscompression/blob/master/src/test/resources/octopus.jpg?raw=true | width=100)
+<img src="https://github.com/orichalque/uselesscompression/blob/master/src/test/resources/octopus.jpg?raw=true" width="100">
 
 After:
 
-![After](src/test/resources/downloadWeird.jpg?raw=true)
-
+<img src="https://github.com/orichalque/uselesscompression/blob/master/src/test/resources/downloadWeird.jpg?raw=true" width="100">
 
 # That's great, how can I use your code?
 
