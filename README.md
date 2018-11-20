@@ -12,11 +12,11 @@ It is possible to reduce the size of the matrix, in order to do a proper compres
 
 Before: 
 
-<img src="https://github.com/orichalque/uselesscompression/blob/master/src/test/resources/download.jpg?raw=true" width="100">
+<img src="https://github.com/orichalque/uselesscompression/blob/master/src/test/resources/download.png?raw=true" width="100">
 
 After:
 
-<img src="https://github.com/orichalque/uselesscompression/blob/master/src/test/resources/output.jpg?raw=true" width="100">
+<img src="https://github.com/orichalque/uselesscompression/blob/master/src/test/resources/output.png?raw=true" width="100">
 
 As you can see the second image weights 100+kB whereas the first is around 30kB , yet the second one is way uglier.
 
