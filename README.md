@@ -12,15 +12,29 @@ It is possible to reduce the size of the matrix, in order to do a proper compres
 
 Before: 
 
-![Before](src/test/resources/download.jpg?raw=true "Before")
+![Before](src/test/resources/download.jpg?raw=true)
 
 After:
 
-![After](src/test/resources/output.jpg?raw=true "After")
+![After](src/test/resources/output.jpg?raw=true)
 
 As you can see the second image weights 100+kB whereas the first is around 30kB , yet the second one is way uglier.
 
-### That's great, how can I use your code?
+# Weird Splitters
+
+This project propose some weird image experimentations, easily usable in the WeirdSplitters classes.
+The purpose is to transform images according to some algorithms, providing some random results.
+
+Before: 
+
+![Before](src/test/resources/octopus.jpg?raw=true)
+
+After:
+
+![After](src/test/resources/downloadWeird.jpg?raw=true)
+
+
+# That's great, how can I use your code?
 
 Easy, that's a maven project, download it and run `mvn package`. Feel free to modify it.
 
