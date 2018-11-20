@@ -79,21 +79,49 @@ class Main {
                 .forEachIndexed {j, pair -> matrix[i][j] = averageColor(map.get(key = Pair(i / factor , j / factor))!!)}
         }
 
+        separatePixelsWithLines(matrix, map, factor, Color.BLACK)
         return matrix
     }
 
-    private fun averageColor(colors: ArrayList<Color>): Color {
+    private fun separatePixelsWithLines(matrix: ArrayList<ArrayList<Color>>, map: HashMap<Pair<Int, Int>, ArrayList<Color>>, factor: Int, color: Color) {
+
+        map.forEach { t, u ->
+            if (t.second -1 >= 0 && almostDifferentColorsWithDelta(averageColor(u),averageColor(map[Pair(t.first, t.second-1)]))) {
+                matrix[t.first*factor][(t.second)*factor] = color
+                //nok
+                matrix[(1+t.first)*factor][(1+t.second)*factor] = color
+
+            }
+            if (t.first -1 >= 0 && almostDifferentColorsWithDelta(averageColor(u), averageColor(map[Pair(t.first -1, t.second)]))) {
+                matrix[t.first*factor][t.second*factor] = color
+
+                matrix[(1+t.first)*factor][(1+t.second)*factor] = color
+            }
+        }
+
+    }
+
+    private fun almostDifferentColorsWithDelta(color1: Color, color2: Color): Boolean {
+        return EuclidianDistanceColors.euclidianDistance(color1, color2) > 40.0
+    }
+
+    fun averageColor(colors: ArrayList<Color>?): Color {
+
         var r = 0
         var g = 0
         var b = 0
         var a = 0
 
-        colors.forEach{ c -> g+=c.green; r+=c.red; b+=c.blue; a+=c.alpha}
-        return Color(r/colors.size, g/colors.size, b/colors.size, a/colors.size)
+        if (colors != null) {
+            colors.forEach{ c -> g+=c.green; r+=c.red; b+=c.blue; a+=c.alpha}
+            return Color(r/colors.size, g/colors.size, b/colors.size, a/colors.size)
+        } else {
+            return Color.WHITE
+        }
     }
 
     fun toImage(reduced: ArrayList<ArrayList<Color>>, f: File, metadata: IIOMetadata? = null) {
-        var image = BufferedImage(reduced.size, reduced[0].size, BufferedImage.TYPE_INT_ARGB)
+        var image = BufferedImage(reduced.size, reduced[0].size, BufferedImage.TYPE_INT_RGB)
         reduced.forEachIndexed{i, arrayList ->  arrayList.forEachIndexed { j, color -> image.setRGB(i, j, color.rgb) }}
 
         if (!f.exists())
@@ -130,6 +158,18 @@ class Main {
         var reader = ImageIO.getImageReaders(input).next()
         reader.setInput(input, true)
         return reader.streamMetadata
+    }
+
+    fun enhancePixels(reduced: ArrayList<ArrayList<Color>>, factor: Int) {
+        var width = reduced.size
+        var length = reduced[0].size
+
+        for (i in 0 until width) {
+            for (j in 0 until length) {
+               if (i % factor == 0 || j % factor == 0)
+                   reduced[i][j] = Color.BLACK
+            }
+        }
     }
 
 }
