@@ -1,5 +1,6 @@
 package com.orichalque
 
+import com.orichalque.Main.Utils.averageColor
 import java.awt.Color
 import java.awt.Dimension
 import java.awt.image.BufferedImage
@@ -105,21 +106,6 @@ class Main {
         return EuclidianDistanceColors.euclidianDistance(color1, color2) > 40.0
     }
 
-    fun averageColor(colors: ArrayList<Color>?): Color {
-
-        var r = 0
-        var g = 0
-        var b = 0
-        var a = 0
-
-        if (colors != null) {
-            colors.forEach{ c -> g+=c.green; r+=c.red; b+=c.blue; a+=c.alpha}
-            return Color(r/colors.size, g/colors.size, b/colors.size, a/colors.size)
-        } else {
-            return Color.WHITE
-        }
-    }
-
     fun toImage(reduced: ArrayList<ArrayList<Color>>, f: File, metadata: IIOMetadata? = null) {
         var image = BufferedImage(reduced.size, reduced[0].size, BufferedImage.TYPE_INT_RGB)
         reduced.forEachIndexed{i, arrayList ->  arrayList.forEachIndexed { j, color -> image.setRGB(i, j, color.rgb) }}
@@ -172,4 +158,37 @@ class Main {
         }
     }
 
+    fun toGrey(image: File): ArrayList<ArrayList<Color>> {
+        var toGrey = loadFile(image)
+        matrix = ArrayList()
+
+        toGrey.forEachIndexed { i, colorList ->
+            var line = ArrayList<Color>()
+            colorList.forEachIndexed {  j, c -> line.add(Color((c.red+c.blue+c.green)/3, (c.red+c.blue+c.green)/3, (c.red+c.blue+c.green)/3, c.alpha)) }
+            matrix.add(line)
+        }
+
+        return matrix
+    }
+
+    object Utils {
+        fun averageColor(colors: Collection<Color>?): Color {
+
+            var r = 0
+            var g = 0
+            var b = 0
+            var a = 0
+
+            if (colors != null) {
+                colors.forEach{ c -> g+=c.green; r+=c.red; b+=c.blue; a+=c.alpha}
+                return Color(r/colors.size, g/colors.size, b/colors.size, a/colors.size)
+            } else {
+                return Color.WHITE
+            }
+        }
+
+        fun distance(firstPoint: Pair<Int, Int>, secondPoint: Pair<Int, Int>): Double {
+            return Math.sqrt(Integer(((firstPoint.first - secondPoint.first) * (firstPoint.first - secondPoint.first) + (firstPoint.second - secondPoint.second) * (firstPoint.second - secondPoint.second))).toDouble())
+        }
+    }
 }

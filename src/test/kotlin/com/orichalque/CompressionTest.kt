@@ -5,7 +5,7 @@ import java.awt.Color
 import java.io.File
 
 
-class GreetingTest {
+class CompressionTest {
 
     @Test
     fun testLoadImage() {
@@ -40,8 +40,23 @@ class GreetingTest {
     @Test
     fun checkWeirdSplitter() {
         var image = File("src/test/resources/octopus.jpg")
-        var matrix = WeirdSplitter1().split(Main().loadFile(image), 25)
-        Main().toImage(matrix, File("src/test/resources/downloadWeird.jpg"), null)
+        var matrix = WeirdSplitter1().split(Main().loadFile(image), 40)
+        Main().toImage(matrix, File("src/test/resources/tmp.jpg"), null)
+    }
+    @Test
+    fun checkWeirdSplitter2() {
+        var image = File("src/test/resources/me.jpg")
+        var matrix = WeirdSplitter2().split(Main().loadFile(image), 10)
+        Main().toImage(matrix, File("src/test/resources/tmp2.jpg"), null)
+    }
+
+    @Test
+    fun checkToGrey() {
+        var main = Main()
+
+        var image = File("src/test/resources/octopus.jpg");
+        var matrix = main.toGrey(image)
+        main.toImage(matrix, File("src/test/resources/octopus_grey.jpg"))
     }
 
 

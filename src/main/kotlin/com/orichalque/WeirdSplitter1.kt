@@ -3,7 +3,7 @@ package com.orichalque
 import java.awt.Color
 import java.util.*
 
-class WeirdSplitter1() {
+class WeirdSplitter1 {
 
     enum class Section {
         TOP,
