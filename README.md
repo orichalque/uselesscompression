@@ -12,13 +12,11 @@ It is possible to reduce the size of the matrix, in order to do a proper compres
 
 Before: 
 
-![Before](src/test/resources/download.jpg?raw=true)
+<img src="https://github.com/orichalque/uselesscompression/blob/master/src/test/resources/download.png?raw=true" width="100">
 
 After:
 
-![After](src/test/resources/output.jpg?raw=true)
-
-As you can see the second image weights 100+kB whereas the first is around 30kB , yet the second one is way uglier.
+<img src="https://github.com/orichalque/uselesscompression/blob/master/src/test/resources/output.jpg?raw=true" width="100">
 
 # Weird Splitters
 
@@ -27,12 +25,11 @@ The purpose is to transform images according to some algorithms, providing some 
 
 Before: 
 
-![Before](src/test/resources/octopus.jpg?raw=true)
+<img src="https://github.com/orichalque/uselesscompression/blob/master/src/test/resources/octopus.jpg?raw=true" width="100">
 
 After:
 
-![After](src/test/resources/downloadWeird.jpg?raw=true)
-
+<img src="https://github.com/orichalque/uselesscompression/blob/master/src/test/resources/downloadWeird.jpg?raw=true" width="100">
 
 # That's great, how can I use your code?
 
